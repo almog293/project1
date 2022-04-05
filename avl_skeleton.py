@@ -114,7 +114,44 @@ class AVLNode(object):
 	"""
 	def isRealNode(self):
 		return False if self is None else True
+	
+	###########################################
+	        """retrieves the node with the maximum rank in a subtree
 
+        @type node: AVLnode
+        @pre: node != none
+        @param node: the root of the subtree
+        @rtype: AVLNode
+        @returns: the node with the maximum rank in a subtree
+        """
+        def getMax(self):
+                if getRight(self) == None:
+                        return self
+                return getMax(self.getRight())
+
+	 """retrieves the node with the minimum rank in a subtree
+
+        @type node: AVLnode
+        @pre: node != none
+        @param node: the root of the subtree
+        @rtype: AVLNode
+        @returns: the node with the minimum rank in a subtree
+        """
+        def getMin(self):
+                if getLeft(self) == None:
+                        return node
+                return getMin(self.getLeft())
+	
+	
+	 """retrieves the balance factor of an AVLNosde
+
+        @type self: AVLnode
+        @pre: self != none
+        @rtype: int
+        @returns: the balance factor of the given node.
+        def getBF(self):
+                return(getLeft(self).height - getRight(self).height)
+	#########################################
 
 
 """
@@ -133,77 +170,6 @@ class AVLTreeList(object):
 		self.last = self.root
 		self.size = 0
 		# add your fields here
-
-        #########################################
-        """retrieves the node with the minimum rank in a subtree
-
-        @type node: AVLnode
-        @pre: node != none
-        @param node: the root of the subtree
-        @rtype: AVLNode
-        @returns: the node with the minimum rank in a subtree
-        """
-        def getMax(self, node):
-                if node.getLeft() == None:
-                        return node
-                return getMax(self, node.getLeft())
-
-        """retrieves the successor
-
-        @type node: AVLnode
-        @pre: node != none
-        @rtype: AVLNode
-        @returns: the successor of node,  None if there is no left child
-        """
-	def getSuccessor(self, node):
-                if self.last == node:
-                        retrun None
-                if node.getRight() is not None:
-                        return getMin(self, node.getRight())
-                parent = node.getParent()
-                while (parent is not None and node = parent.getRight()):
-                        node = parent
-                        parent = node.getParent()
-                return parent
-        #########################################
-
-        #########################################
-        """retrieves the node with the maximum rank in a subtree
-
-        @type node: AVLnode
-        @pre: node != none
-        @param node: the root of the subtree
-        @rtype: AVLNode
-        @returns: the node with the maximum rank in a subtree
-        """
-        def getMax(self, node):
-                if node.getRight() == None:
-                        return node
-                return getMax(self, node.getRight())
-
-        """retrieves the predecessor
-
-        @type node: AVLnode
-        @pre: node != none
-        @rtype: AVLNode
-        @returns: the predecessor of node,  None if there is no left child
-        """    
-        def getPredecessor(self, node):
-                if self.first == node:
-                        retrun None
-                if node.getLeft() is not None:
-                        return getMax(self, node.getLeft())
-                parent = node.getParent()
-                while (temp is not None and node = parent.getLeft()):
-                        node = parent
-                        parent = node.getParent()
-                return parent
-        #########################################
-
-        #########################################
-        def getBF(self, node):
-                return(node.getLeft().height - node.getRight().height)
-        #########################################
 
         
 	"""returns whether the list is empty
@@ -364,4 +330,42 @@ class AVLTreeList(object):
 	"""
 	def getRoot(self):
 		return self.root
+		
+	#########################################
+        """retrieves the successor
+
+        @type node: AVLnode
+        @pre: node != none
+        @rtype: AVLNode
+        @returns: the successor of node,  None if there is no left child
+        """
+	def getSuccessor(self, node):
+                if self.last == node:
+                        retrun None
+                if node.getRight() is not None:
+                        return getMin(node.getRight())
+                parent = node.getParent()
+                while (parent is not None and node = parent.getRight()):
+                        node = parent
+                        parent = node.getParent()
+                return parent
+ 
+        """retrieves the predecessor
+
+        @type node: AVLnode
+        @pre: node != none
+        @rtype: AVLNode
+        @returns: the predecessor of node,  None if there is no left child
+        """    
+        def getPredecessor(self, node):
+                if self.first == node:
+                        retrun None
+                if node.getLeft() is not None:
+                        return getMax(node.getLeft())
+                parent = node.getParent()
+                while (temp is not None and node = parent.getLeft()):
+                        node = parent
+                        parent = node.getParent()
+                return parent
+        #########################################
 
